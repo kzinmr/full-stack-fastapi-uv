@@ -165,10 +165,8 @@ It will copy all the files, ask you configuration questions, and update the `.en
 You can install Copier with:
 
 ```bash
-uvx install copier
+uv tool install copier
 ```
-
-**Note**: If you have `uvx`, installing copier is optional, you could run it directly.
 
 ### Generate a Project With Copier
 

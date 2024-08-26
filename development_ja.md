@@ -104,6 +104,7 @@ docker compose up -d
 uv/uvx を使用する場合、以下のように実行できます：
 
 ```bash
+❯ uv tool install pre-commit
 ❯ uvx pre-commit install
 pre-commit installed at .git/hooks/pre-commit
 ```
