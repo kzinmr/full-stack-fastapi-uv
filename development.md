@@ -106,10 +106,10 @@ You can find a file `.pre-commit-config.yaml` with configurations at the root of
 
 After having the `pre-commit` tool installed and available, you need to "install" it in the local repository, so that it runs automatically before each commit.
 
-Using Poetry, you could do it with:
+Using uv/uvx, you could do it with:
 
 ```bash
-❯ poetry run pre-commit install
+❯ uvx pre-commit install
 pre-commit installed at .git/hooks/pre-commit
 ```
 
@@ -125,10 +125,10 @@ Then you can `git add` the modified/fixed files again and now you can commit.
 
 #### Running pre-commit hooks manually
 
-you can also run `pre-commit` manually on all the files, you can do it using Poetry with:
+you can also run `pre-commit` manually on all the files, you can do it using uv/uvx with:
 
 ```bash
-❯ poetry run pre-commit run --all-files
+❯ uvx run pre-commit run --all-files
 check for added large files..............................................Passed
 check toml...............................................................Passed
 check yaml...............................................................Passed
