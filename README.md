@@ -6,15 +6,15 @@
 ## Technology Stack and Features
 
 - ⚡ [**FastAPI**](https://fastapi.tiangolo.com) for the Python backend API.
-    - 🧰 [SQLModel](https://sqlmodel.tiangolo.com) for the Python SQL database interactions (ORM).
-    - 🔍 [Pydantic](https://docs.pydantic.dev), used by FastAPI, for the data validation and settings management.
-    - 💾 [PostgreSQL](https://www.postgresql.org) as the SQL database.
+  - 🧰 [SQLModel](https://sqlmodel.tiangolo.com) for the Python SQL database interactions (ORM).
+  - 🔍 [Pydantic](https://docs.pydantic.dev), used by FastAPI, for the data validation and settings management.
+  - 💾 [PostgreSQL](https://www.postgresql.org) as the SQL database.
 - 🚀 [React](https://react.dev) for the frontend.
-    - 💃 Using TypeScript, hooks, Vite, and other parts of a modern frontend stack.
-    - 🎨 [Chakra UI](https://chakra-ui.com) for the frontend components.
-    - 🤖 An automatically generated frontend client.
-    - 🧪 [Playwright](https://playwright.dev) for End-to-End testing.
-    - 🦇 Dark mode support.
+  - 💃 Using TypeScript, hooks, Vite, and other parts of a modern frontend stack.
+  - 🎨 [Chakra UI](https://chakra-ui.com) for the frontend components.
+  - 🤖 An automatically generated frontend client.
+  - 🧪 [Playwright](https://playwright.dev) for End-to-End testing.
+  - 🦇 Dark mode support.
 - 🐋 [Docker Compose](https://www.docker.com) for development and production.
 - 🔒 Secure password hashing by default.
 - 🔑 JWT (JSON Web Token) authentication.
@@ -92,7 +92,7 @@ git remote add upstream git@github.com:fastapi/full-stack-fastapi-template.git
 - Push the code to your new repository:
 
 ```bash
-git push -u origin master
+git push -u origin main
 ```
 
 ### Update From the Original Template
@@ -113,7 +113,7 @@ upstream    git@github.com:fastapi/full-stack-fastapi-template.git (push)
 - Pull the latest changes without merging:
 
 ```bash
-git pull --no-commit upstream master
+git pull --no-commit upstream main
 ```
 
 This will download the latest changes from this template without committing them, that way you can check everything is right before committing.
@@ -128,7 +128,12 @@ git merge --continue
 
 ### Configure
 
+**Rename master branch as main: `git branch -M main`**
+
+
 **Copy `.env.sample` to `.env` first.**
+
+
 
 You can then update configs in the `.env` files to customize your configurations.
 
@@ -178,7 +183,7 @@ Go to the directory that will be the parent of your project, and run the command
 uvx copier copy https://github.com/fastapi/full-stack-fastapi-template my-awesome-project --trust
 ```
 
-**Note** the `--trust` option is necessary to be able to execute a [post-creation script](https://github.com/fastapi/full-stack-fastapi-template/blob/master/.copier/update_dotenv.py) that updates your `.env` files.
+**Note** the `--trust` option is necessary to be able to execute a [post-creation script](https://github.com/fastapi/full-stack-fastapi-template/blob/main/.copier/update_dotenv.py) that updates your `.env` files.
 
 ### Input Variables
 

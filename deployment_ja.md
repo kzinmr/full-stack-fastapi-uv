@@ -280,7 +280,7 @@ cd /home/github/actions-runner
 
 `.github/workflows`ディレクトリには、以下の環境（指定されたラベルを持つ GitHub Actions ランナー）にデプロイするための GitHub Action ワークフローがすでに設定されています：
 
-- `staging`: `master`ブランチへのプッシュ（またはマージ）後。
+- `staging`: `main`ブランチへのプッシュ（またはマージ）後。
 - `production`: リリース公開後。
 
 追加の環境が必要な場合は、これらを出発点として使用できます。
