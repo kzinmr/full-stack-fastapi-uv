@@ -128,6 +128,8 @@ git merge --continue
 
 ### Configure
 
+**Copy `.env.sample` to `.env` first.**
+
 You can then update configs in the `.env` files to customize your configurations.
 
 Before deploying it, make sure you change at least the values for:
@@ -163,16 +165,10 @@ It will copy all the files, ask you configuration questions, and update the `.en
 You can install Copier with:
 
 ```bash
-pip install copier
+uvx install copier
 ```
 
-Or better, if you have [`pipx`](https://pipx.pypa.io/), you can run it with:
-
-```bash
-pipx install copier
-```
-
-**Note**: If you have `pipx`, installing copier is optional, you could run it directly.
+**Note**: If you have `uvx`, installing copier is optional, you could run it directly.
 
 ### Generate a Project With Copier
 
@@ -181,13 +177,7 @@ Decide a name for your new project's directory, you will use it below. For examp
 Go to the directory that will be the parent of your project, and run the command with your project's name:
 
 ```bash
-copier copy https://github.com/fastapi/full-stack-fastapi-template my-awesome-project --trust
-```
-
-If you have `pipx` and you didn't install `copier`, you can run it directly:
-
-```bash
-pipx run copier copy https://github.com/fastapi/full-stack-fastapi-template my-awesome-project --trust
+uvx copier copy https://github.com/fastapi/full-stack-fastapi-template my-awesome-project --trust
 ```
 
 **Note** the `--trust` option is necessary to be able to execute a [post-creation script](https://github.com/fastapi/full-stack-fastapi-template/blob/master/.copier/update_dotenv.py) that updates your `.env` files.
@@ -214,19 +204,23 @@ The input variables, with their default values (some auto generated) are:
 
 ## Backend Development
 
-Backend docs: [backend/README.md](./backend/README.md).
+Backend docs: [backend/README.md](./backend/README.md)
+(日本語) [backend/README_ja.md](./backend/README_ja.md).
 
 ## Frontend Development
 
-Frontend docs: [frontend/README.md](./frontend/README.md).
+Frontend docs: [frontend/README.md](./frontend/README.md),
+(日本語) [frontend/README_ja.md](./frontend/README_ja.md).
 
 ## Deployment
 
-Deployment docs: [deployment.md](./deployment.md).
+Deployment docs: [deployment.md](./deployment.md),
+(日本語) [deployment_ja.md](./deployment_ja.md).
 
 ## Development
 
-General development docs: [development.md](./development.md).
+General development docs: [development.md](./development.md),
+(日本語) [development_ja.md](./development_ja.md).
 
 This includes using Docker Compose, custom local domains, `.env` configurations, etc.
 
