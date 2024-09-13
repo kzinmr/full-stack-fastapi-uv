@@ -14,6 +14,12 @@
 
 ### Internal
 
+* 👷 Improve playwright CI job. PR [#1335](https://github.com/fastapi/full-stack-fastapi-template/pull/1335) by [@patrick91](https://github.com/patrick91).
+* 👷 Update `issue-manager.yml`. PR [#1329](https://github.com/fastapi/full-stack-fastapi-template/pull/1329) by [@tiangolo](https://github.com/tiangolo).
+* 💚 Set `include-hidden-files` to `True` when using the `upload-artifact` GH action. PR [#1327](https://github.com/fastapi/full-stack-fastapi-template/pull/1327) by [@svlandeg](https://github.com/svlandeg).
+* 👷🏻 Auto-generate frontend client . PR [#1320](https://github.com/fastapi/full-stack-fastapi-template/pull/1320) by [@alejsdev](https://github.com/alejsdev).
+* 🐛 Fix in `.github/labeler.yml`. PR [#1322](https://github.com/fastapi/full-stack-fastapi-template/pull/1322) by [@alejsdev](https://github.com/alejsdev).
+* 👷 Update `.github/labeler.yml`. PR [#1321](https://github.com/fastapi/full-stack-fastapi-template/pull/1321) by [@alejsdev](https://github.com/alejsdev).
 * 👷 Update `latest-changes` GitHub Action. PR [#1315](https://github.com/fastapi/full-stack-fastapi-template/pull/1315) by [@tiangolo](https://github.com/tiangolo).
 * 👷 Update configs for labeler. PR [#1308](https://github.com/fastapi/full-stack-fastapi-template/pull/1308) by [@tiangolo](https://github.com/tiangolo).
 * 👷 Update GitHub Action labeler to add only one label. PR [#1304](https://github.com/fastapi/full-stack-fastapi-template/pull/1304) by [@tiangolo](https://github.com/tiangolo).
