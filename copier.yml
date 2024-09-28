@@ -62,6 +62,7 @@ sentry_dsn:
 _exclude:
   # Global
   - .vscode
+  - .mypy_cache
   # Python
   - __pycache__
   - app.egg-info
@@ -69,7 +70,6 @@ _exclude:
   - .mypy_cache
   - .coverage
   - htmlcov
-  - uv.lock
   - .cache
   - .venv
   # Frontend
@@ -97,4 +97,4 @@ _exclude:
 _answers_file: .copier/.copier-answers.yml
 
 _tasks:
-  - "python .copier/update_dotenv.py"
+  - ["{{ _copier_python }}", .copier/update_dotenv.py]

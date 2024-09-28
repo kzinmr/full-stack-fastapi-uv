@@ -1,107 +1,140 @@
-# 開発
+# FastAPIプロジェクト - 開発
 
-## カスタムドメインを使用した `localhost` での開発
+## Docker Compose
 
-`localhost`以外のドメインを使用したい場合があるかもしれません。例えば、サブドメインを必要とするクッキーで問題が発生し、Chrome が`localhost`の使用を許可しない場合などです。
+* Docker Composeでローカルスタックを起動します：
 
-その場合、2 つの選択肢があります：
-
-1. 後述の**カスタム IP を使用した開発**の指示に従ってシステムの`hosts`ファイルを修正する
-2. `localhost.tiangolo.com`を使用する。これは`localhost`（IP `127.0.0.1`）とそのすべてのサブドメインを指すように設定されています。
-
-プロジェクト生成時にデフォルトの CORS 有効ドメインを使用した場合、`localhost.tiangolo.com`は許可されるように設定されています。これは、`.env`ファイルの`BACKEND_CORS_ORIGINS`変数のリストで指定されています。
-
-スタック内で設定するには、以下の**開発用"ドメイン"の変更**セクションに従い、ドメイン`localhost.tiangolo.com`を使用してください。
-
-これらの手順を実行後、http://localhost.tiangolo.com を開くことができ、`localhost`のスタックによって提供されます。
-
-利用可能な URL の一覧は最後のセクションで確認できます。
-
-## カスタム IP を使用した開発
-
-Docker を`127.0.0.1`（`localhost`）以外の "カスタム IP アドレス" で実行している場合、追加の手順が必要です。これは、カスタム仮想マシンを実行している場合や、Docker がネットワーク上の別のマシンにある場合に該当します。
-
-この場合、偽のローカルドメイン（`dev.example.com`など）を使用し、そのドメインがカスタム IP（例：`192.168.99.150`）によって提供されていると、コンピュータに認識させる必要があります。
-
-そのようなカスタムドメインがある場合、`.env`ファイルの`BACKEND_CORS_ORIGINS`変数のリストに追加する必要があります。
-
-- 管理者権限でテキストエディタを使用して`hosts`ファイルを開きます：
-
-  - **Mac と Linux 向け注意**: `hosts`ファイルは通常`/etc/hosts`にあります。
-  - **Windows 向け注意**: Windows の場合、`c:\Windows\System32\Drivers\etc\`ディレクトリにあります。
-
-- 既存の内容に加えて、`カスタムIP ダミーローカルドメイン`（例：`192.168.99.150 dev.example.com`）を含む新しい行を追加します。
-
-- ファイルを保存します。
-  - **Windows 向け注意**: ファイルを拡張子なしの「すべてのファイル」として保存してください。
-
-これにより、コンピュータはダミーのローカルドメインがそのカスタム IP によって提供されていると認識し、ブラウザでその URL を開くと、`dev.example.com`に行くよう要求された際に、実際にはコンピュータ上で動作しているローカルサーバーと直接通信します。
-
-スタック内で設定するには、以下の**開発用"ドメイン"の変更**セクションに従い、ドメイン`dev.example.com`を使用してください。
-
-これらの手順を実行後、 `http://dev.example.com` を開くことができ、`192.168.99.150`のスタックによって提供されます。
-
-利用可能な URL の一覧は最後のセクションで確認できます。
-
-## 開発用"ドメイン"の変更
-
-ローカルスタックを`localhost`以外のドメインで使用する必要がある場合、使用するドメインが、スタックが設定されている IP を指していることを確認する必要があります。
-
-例えば、API docs（Swagger UI）が API の場所を認識するように、Docker Compose 設定を簡素化するには、compose に API のドメインを開発用に使用していることを知らせる必要があります。これは`DOMAIN` 環境変数に指定することで Docker Compose が認識し実現されます。
-
-- `./.env` の以下の行を：
-
-```
-DOMAIN=localhost
+```bash
+docker compose watch
 ```
 
-- 使用するドメインに変更します。例：
+* ブラウザを開いて以下のURLにアクセスできます：
 
+Dockerでビルドされたフロントエンド（パスに基づいてルーティング）: http://localhost:5173
+
+OpenAPIベースのJSON形式のバックエンドAPI: http://localhost:8000
+
+OpenAPIバックエンドによる自動対話型ドキュメント（Swagger UI）: http://localhost:8000/docs
+
+データベース管理用ウェブインターフェース（Adminer）: http://localhost:8080
+
+プロキシによるルート処理の確認用Traefik UI: http://localhost:8090
+
+**注意**: スタックを初めて起動する際、準備が整うまで1分ほどかかる場合があります。バックエンドがデータベースの準備を待ち、すべての設定を行うためです。ログを確認して進捗を監視できます。
+
+ログを確認するには（別のターミナルで）以下を実行します：
+
+```bash
+docker compose logs
 ```
+
+特定のサービスのログを確認するには、サービス名を追加します。例：
+
+```bash
+docker compose logs backend
+```
+
+## ローカル開発
+
+Docker Composeファイルは、各サービスが`localhost`の異なるポートで利用できるように設定されています。
+
+バックエンドとフロントエンドは、ローカル開発サーバーと同じポートを使用します。つまり、バックエンドは`http://localhost:8000`、フロントエンドは`http://localhost:5173`です。
+
+これにより、Docker Composeサービスを停止してローカル開発サービスを起動しても、同じポートを使用するため、すべてが正常に動作し続けます。
+
+例えば、Docker Composeの`frontend`サービスを停止し、別のターミナルで以下を実行できます：
+
+```bash
+docker compose stop frontend
+```
+
+そしてローカルフロントエンド開発サーバーを起動します：
+
+```bash
+cd frontend
+npm run dev
+```
+
+または`backend` Docker Composeサービスを停止できます：
+
+```bash
+docker compose stop backend
+```
+
+そしてバックエンドのローカル開発サーバーを実行できます：
+
+```bash
+cd backend
+fastapi dev app/main.py
+```
+
+## `localhost.tiangolo.com`でのDocker Compose
+
+Docker Composeスタックを起動すると、デフォルトで`localhost`を使用し、各サービス（バックエンド、フロントエンド、Adminerなど）に異なるポートが割り当てられます。
+
+本番環境（またはステージング環境）にデプロイする際は、各サービスが異なるサブドメインにデプロイされます（例：バックエンドは`api.example.com`、フロントエンドは`dashboard.example.com`）。
+
+[デプロイメント](deployment.md)のガイドでは、設定されたプロキシであるTraefikについて説明しています。これはサブドメインに基づいて各サービスにトラフィックを転送する役割を果たします。
+
+ローカルでこれらが正常に動作しているかテストしたい場合は、ローカルの`.env`ファイルを編集し、以下のように変更できます：
+
+```dotenv
 DOMAIN=localhost.tiangolo.com
 ```
 
-その後、以下のコマンドでスタックを再起動できます：
+これはDocker Composeファイルでサービスのベースドメインを設定するために使用されます。
+
+Traefikはこれを使用して、`api.localhost.tiangolo.com`へのトラフィックをバックエンドに、`dashboard.localhost.tiangolo.com`へのトラフィックをフロントエンドに転送します。
+
+`localhost.tiangolo.com`ドメイン（およびそのすべてのサブドメイン）は`127.0.0.1`を指すように設定された特別なドメインです。これによりローカル開発に使用できます。
+
+更新後、再度以下を実行します：
 
 ```bash
-docker compose up -d
+docker compose watch
 ```
 
-対応する利用可能な URL は最後のセクションで確認できます。
+本番環境などにデプロイする場合、メインのTraefikはDocker Composeファイルの外部で設定されます。ローカル開発では、`docker-compose.override.yml`に含まれるTraefikを使用して、`api.localhost.tiangolo.com`や`dashboard.localhost.tiangolo.com`などのドメインが期待通りに動作することをテストできます。
 
-## Docker Compose ファイルと環境変数
+## Docker Composeファイルと環境変数
 
-スタック全体に適用される全ての設定を含むメイン `compose.yml` ファイルがあり、`docker compose`によって自動的に使用されます。
+スタック全体に適用される設定を含むメインの`compose.yml`ファイルがあり、`docker compose`によって自動的に使用されます。
 
-また、開発用のオーバーライド（例：ソースコードをボリュームとしてマウントするなど）を含む`compose.override.yml`もあります。これは`docker compose`によって自動的に使用され、`compose.yml`の上にオーバーライドを適用します。
+また、開発用のオーバーライドを含む`compose.override.yml`もあります。例えば、ソースコードをボリュームとしてマウントするなどの設定が含まれています。これは`docker compose`によって自動的に使用され、`compose.yml`の上にオーバーライドを適用します。
 
-これらの Docker Compose ファイルは、コンテナに注入される環境変数設定を含む`.env`ファイルを使用します。
+これらのDocker Composeファイルは、コンテナに注入される環境変数として設定を含む`.env`ファイルを使用します。
 
-また、`docker compose`コマンドを呼び出す前にスクリプトで設定された追加の環境変数設定も使用します。
+また、`docker compose`コマンドを呼び出す前にスクリプトで設定された環境変数からいくつかの追加設定も使用します。
 
-## .env ファイル
+変数を変更した後は、必ずスタックを再起動してください：
 
-`.env`ファイルは、すべての設定、生成されたキーやパスワードなどを含むファイルです。
+```bash
+docker compose watch
+```
 
-ワークフローによっては、例えばプロジェクトが公開されている場合、このファイルを Git から除外したい場合があります。その場合、プロジェクトのビルドやデプロイ時に CI ツールがこのファイルを取得する方法を確保する必要があります。
+## .envファイル
 
-一つの方法として、各環境変数を CI/CD システムに追加し、`.env`ファイルを読み取る代わりに特定の環境変数を読み取るように`compose.yml`ファイルを更新することができます。
+`.env`ファイルには、すべての設定、生成されたキーやパスワードなどが含まれています。
 
-### pre-commit と lint
+プロジェクトがパブリックな場合など、ワークフローによってはGitから除外したい場合があります。その場合、プロジェクトのビルドやデプロイ時にCIツールがこれを取得する方法を確保する必要があります。
 
-コードの lint と format には[pre-commit](https://pre-commit.com/)というツールを使用しています。
+一つの方法として、各環境変数をCI/CDシステムに追加し、`compose.yml`ファイルを更新して`.env`ファイルを読み取る代わりに特定の環境変数を読み取るようにすることができます。
 
-インストールすると、git でコミットする直前に実行されます。これにより、コードがコミットされる前に一貫性があり、フォーマットされていることが保証されます。
+## プリコミットとコードリンティング
 
-プロジェクトのルートに設定ファイル`.pre-commit-config.yaml`があります。
+コードのリンティングとフォーマットには[pre-commit](https://pre-commit.com/)というツールを使用しています。
 
-#### 自動実行のための pre-commit のインストール
+インストールすると、gitでコミットする直前に実行されます。これにより、コードが一貫性を保ち、フォーマットされていることがコミット前に確認されます。
 
-`pre-commit`はすでにプロジェクトの依存関係の一部ですが、[公式の pre-commit ドキュメント](https://pre-commit.com/)に従ってグローバルにインストールすることもできます。
+プロジェクトのルートに`.pre-commit-config.yaml`という設定ファイルがあります。
+
+#### 自動実行のためのpre-commitのインストール
+
+`pre-commit`はすでにプロジェクトの依存関係の一部ですが、グローバルにインストールすることもできます。その場合は[公式のpre-commitドキュメント](https://pre-commit.com/)に従ってください。
 
 `pre-commit`ツールがインストールされ利用可能になったら、各コミットの前に自動的に実行されるようにローカルリポジトリに「インストール」する必要があります。
 
-uv/uvx を使用する場合、以下のように実行できます：
+`uv`/`uvx`を使用する場合、以下のようにできます：
 
 ```bash
 ❯ uv tool install pre-commit
@@ -109,19 +142,13 @@ uv/uvx を使用する場合、以下のように実行できます：
 pre-commit installed at .git/hooks/pre-commit
 ```
 
-これで、例えば以下のようにコミットしようとすると：
+これで、コミットしようとする際（例：`git commit`）に、pre-commitが実行され、コミットしようとしているコードをチェックおよびフォーマットし、そのコードを再度gitでステージングするよう求めます。
 
-```bash
-git commit
-```
+その後、修正されたファイルを再度`git add`でステージングし、コミットできます。
 
-...pre-commit が実行され、コミットしようとしているコードをチェックしフォーマットし、修正されたコードを再度 git で追加（ステージング）するよう求めます。
+#### pre-commitフックの手動実行
 
-その後、修正/修正されたファイルを再度`git add`し、コミットできます。
-
-#### pre-commit フックの手動実行
-
-すべてのファイルに対して`pre-commit`を手動で実行することもできます。 uv/uvx を使用して以下のように実行できます：
+`pre-commit`を全ファイルに対して手動で実行することもできます。`uvx`を使用して以下のように実行できます：
 
 ```bash
 ❯ uvx pre-commit run --all-files
@@ -136,31 +163,35 @@ prettier.................................................................Passed
 
 ## URL
 
-本番環境やステージング環境の URL は、同じパスを使用しますが、自身のドメインを使用します。
+本番環境やステージング環境のURLは、これらと同じパスを使用しますが、独自のドメインを使用します。
 
-### 開発用 URL
+### 開発用URL
 
-フロントエンド: http://localhost
+ローカル開発用のURL。
 
-バックエンド: http://localhost/api/
+フロントエンド: http://localhost:5173
 
-Swagger UI: http://localhost/docs
+バックエンド: http://localhost:8000
 
-ReDoc: http://localhost/redoc
+自動対話型ドキュメント（Swagger UI）: http://localhost:8000/docs
+
+自動代替ドキュメント（ReDoc）: http://localhost:8000/redoc
 
 Adminer: http://localhost:8080
 
 Traefik UI: http://localhost:8090
 
-### カスタムドメインを使用した開発用 URL
+### `localhost.tiangolo.com`設定時の開発用URL
 
-フロントエンド: http://localhost.tiangolo.com
+ローカル開発用のURL。
 
-バックエンド: http://localhost.tiangolo.com/api/
+フロントエンド: http://dashboard.localhost.tiangolo.com
 
-Swagger UI: http://localhost.tiangolo.com/docs
+バックエンド: http://api.localhost.tiangolo.com
 
-ReDoc: http://localhost.tiangolo.com/redoc
+自動対話型ドキュメント（Swagger UI）: http://api.localhost.tiangolo.com/docs
+
+自動代替ドキュメント（ReDoc）: http://api.localhost.tiangolo.com/redoc
 
 Adminer: http://localhost.tiangolo.com:8080
 
